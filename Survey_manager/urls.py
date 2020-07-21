@@ -15,7 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib import admin
+from django.urls import path
+from survey import views as survey_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', survey_views.frontend),
+    path('survey/<slug:slug>/', survey_views.frontend),
+    path('surveyparticipant/<slug:slug>/', survey_views.frontend),
 ]
+
+# const routes = [
+#   { component: SurveyList, path: '/survey/', },
+#   { component: SurveyParticipantList,  path: '/surveyparticipant/',  },
+#   { component: SurveyItem, path: '/survey/:slug/', },
+#   { component: SurveyParticipantItem,  path: '/surveyparticipant/:slug/',  },
+# ]
+#
+# const router = new VueRouter({
+#   mode: 'history',
+#   routes: routes,
+# })
