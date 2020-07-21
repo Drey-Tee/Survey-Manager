@@ -22,7 +22,7 @@
       <div class="jumbotron">
         <h1 class="display-4">Django and Vue.js</h1>
         <p class="lead">
-            Carry Out a Survey for Clarification
+            Carry out a survey for clarification
         </p>
       </div>
 
@@ -74,7 +74,7 @@
 
     <template id="surveyparticipant-list-template">
       <div class="surveyparticipant-list">
-        <h2>Survey Participant</h2>
+        <h2>Survey Participants</h2>
         <surveyparticipant-item
           v-for="surveyparticipant in surveyparticipants"
           v-bind:key="surveyparticipant.slug"
@@ -133,15 +133,15 @@
       // store
       const store = new Vuex.Store({
         state: {
-            surveyparticipant: [
-            {% for surveyparticipant in surveyparticipantS %}
+            surveyparticipants: [
+            {% for surveyparticipant in surveyparticipants %}
                 {
                   name: '{{ surveyparticipant.name }}',
                   slug: '{{ surveyparticipant.slug }}',
                 },
             {% endfor %}
             ],
-            articles: [
+            surveys: [
             {% for survey in surveys %}
                 {
                   content: '{{ survey.content | linebreaksbr }}',
@@ -155,8 +155,8 @@
           getSurveyBySlug: (state) => (slug) => {
             return state.surveys.find(surveys => surveys.slug === slug)
           },
-          getSurveyBySlug: (state) => (slug) => {
-            return state.surveys.find(surveys => surveys.slug === slug)
+          getSurveyParticipantBySlug: (state) => (slug) => {
+            return state.surveyparticipants.find(surveyparticipants => surveyparticipants.slug === slug)
           },
         }
       })
@@ -198,7 +198,7 @@
       })
 
       // app
-      const myapp = new Vue({
+      const survey = new Vue({
           router,
           store,
       }).$mount('#survey');
