@@ -1,16 +1,8 @@
-from django.forms import ModelForm, TextInput, Select
-from app.models import SurveyParticipant
+from django import forms
+from .models import Survey
 
-
-class SurveyParticpantForm(ModelForm):
-    content = forms.ModelChoiceField(
-        queryset=Survey.objects.all(),
-        widget=Select(attrs={'class': 'content'}),
-    )
-
+class SurveyForm(forms.ModelForm):
     class Meta:
-        model = SP
-        fields = ('name','slug')
-        widgets = {
-            'name': TextInput(attrs={'class': 'name'})
-        }
+        model = Survey
+        # fields = ('sp_id', 'survey_name', 'content', 'slug')
+        fields = "__all__"

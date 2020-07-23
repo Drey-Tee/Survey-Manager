@@ -22,5 +22,12 @@ urlpatterns = [
     path('', survey_views.frontend),
     path('surveys/<slug:slug>/', survey_views.frontend),
     path('surveyparticipants/<slug:slug>/', survey_views.frontend),
+    path('survey', survey_views.survey),
+    path('show',survey_views.show),
+    path('edit/<int:id>', survey_views.edit),
+    path('update/<int:id>', survey_views.update),
+    path('delete/<int:id>', survey_views.destroy),
+
+
 ]
 
