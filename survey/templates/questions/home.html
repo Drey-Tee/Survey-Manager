@@ -1,0 +1,25 @@
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Chronic Disease Surveys</h3>
+            </div>
+
+            <ul class="list-group">
+                {% for quest in quests %}
+                <li class="list-group-item">
+                    <strong>{{ quest.question }}</strong>
+                    <span class="pull-right">
+                         <a href="/vote/{{quest.id }}"><span class="glyphicon glyphicon-pencil">Vote</span></a>
+                         <a href="/results/{{ quest.id }}">Results</a>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

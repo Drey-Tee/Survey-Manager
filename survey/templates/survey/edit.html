@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-<form method="POST" class="post-form" action="/update/{{surveys.id}}">
+<form method="POST" class="post-form" action="/edit/{{surveys.id}}">
         {% csrf_token %}
     <div class="container">
 <br>
@@ -18,28 +18,10 @@
     <h3>Update Surveys</h3>
     </div>
   </div>
-    <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Survey Participant Id:</label>
-    <div class="col-sm-4">
-        <input type="text" name="sp_id" id="id_sp_id" required maxlength="20" value="{{ surveys.sp_id }}"/>
-    </div>
-  </div>
   <div class="form-group row">
     <label class="col-sm-2 col-form-label">Survey Name:</label>
     <div class="col-sm-4">
         <input type="text" name="survey_name" id="id_survey_name" required maxlength="500" value="{{ surveys.survey_name }}" />
-    </div>
-  </div>
-    <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Survey Content:</label>
-    <div class="col-sm-4">
-        <input type="text" name="content" id="id_content" required maxlength="500" value="{{ surveys.content }}" />
-    </div>
-  </div>
-    <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Survey Slug:</label>
-    <div class="col-sm-4">
-        <input type="text" name="slug" id="id_slug" required maxlength="500" value="{{ surveys.slug }}" />
     </div>
   </div>
     <div class="form-group row">

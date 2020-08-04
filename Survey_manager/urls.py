@@ -19,14 +19,21 @@ from survey import views as survey_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', survey_views.frontend),
-    path('surveys/<slug:slug>/', survey_views.frontend),
-    path('surveyparticipants/<slug:slug>/', survey_views.frontend),
-    path('survey', survey_views.survey),
-    path('show',survey_views.show),
-    path('edit/<int:id>', survey_views.edit),
-    path('update/<int:id>', survey_views.update),
-    path('delete/<int:id>', survey_views.destroy),
+    # path('', survey_views.frontend),
+    # path('surveys/<slug:slug>/', survey_views.frontend),
+    # path('surveyparticipants/<slug:slug>/', survey_views.frontend),
+    # path('survey', survey_views.survey),
+    # path('show',survey_views.show),
+    # path('edit/<int:id>', survey_views.edit),
+    # path('delete/<int:id>', survey_views.destroy),
+    path('question', survey_views.question),
+    path('show_q',survey_views.show_q),
+    path('edit_q/<int:id>', survey_views.edit_q),
+    path('delete_q/<int:id>', survey_views.destroy_q),
+    path('create_q/<int:id>', survey_views.create_q, name = 'create'),
+    path('home', survey_views.home),
+    path('vote/<int:id>', survey_views.vote, name='vote'),
+    path('results/<int:id>', survey_views.results, name='results'),
 
 
 ]

@@ -1,0 +1,36 @@
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"> Result</h3>
+                    {% load static %}
+                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+            </div>
+
+            <div class="panel-body">
+                <h3>{{ quest.question }}</h3>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">{{ quest.option_one }} &mdash; <strong>{{ quest.option_one_count }}</strong></li>
+                <li class="list-group-item">{{ quest.option_two }} &mdash; <strong>{{ quest.option_two_count }}</strong></li>
+                <li class="list-group-item">{{ quest.option_three }} &mdash; <strong>{{ quest.option_three_count }}</strong></li>
+            </ul>
+
+            <div class="panel-footer">
+                Total &mdash; <strong>{{ quest.total }}</strong>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</div>
+{% endblock %}
