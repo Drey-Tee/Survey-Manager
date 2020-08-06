@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'survey',
     'widget_tweaks',
-
 ]
 
 MIDDLEWARE = [

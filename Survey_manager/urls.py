@@ -30,11 +30,9 @@ urlpatterns = [
     path('show_q',survey_views.show_q),
     path('edit_q/<int:id>', survey_views.edit_q),
     path('delete_q/<int:id>', survey_views.destroy_q),
-    path('create_q/<int:id>', survey_views.create_q, name = 'create'),
+    path('create_q/<int:id>', survey_views.create_q),
     path('home', survey_views.home),
     path('vote/<int:id>', survey_views.vote, name='vote'),
     path('results/<int:id>', survey_views.results, name='results'),
-
-
 ]
 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Survey Records</title>
-    {% load static %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+         {% load static %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
@@ -23,7 +23,7 @@
     {% for question in questions %}
     <tr>
         <td>{{ question.created_at }}</td>
-        <td>{{ question.survey_id }}</td>
+        <td>{{ question.id }}</td>
         <td>
 <!--            <a href="/create_q/{{question.survey_name }}">{{question.survey_name}}</a>-->
             <a href="/create_q/{{question.id}}"><span class="glyphicon glyphicon-pencil">{{question.survey_name}}</span></a>

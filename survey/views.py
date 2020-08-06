@@ -1,7 +1,7 @@
-from django.shortcuts import render,redirect
-from .models import  SurveyParticipant, SurveyQuestions, Questions
+from django.shortcuts import render, redirect
+from .models import SurveyParticipant, SurveyQuestions, Questions
 from .forms import QuestionForm, CreateQuestionForm
-from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 
 
 # # Create your views here.
@@ -18,12 +18,12 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpRespon
 #     return render(request, 'survey/templates.html', data)
 
 
-
 def question(request):
     # surveys = SurveyQuestions.objects.all()
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
+            print(1)
             try:
                 form.save()
                 print(2)
@@ -32,13 +32,12 @@ def question(request):
                 pass
     else:
         form = QuestionForm()
-    return render(request,'questions/question_index.html',{'form':form,})
-
+    return render(request, 'questions/question_index.html', {'form': form, })
 
 
 def show_q(request):
     questions = SurveyQuestions.objects.all()
-    return render(request,"questions/question_show.html",{'questions':questions})
+    return render(request, "questions/question_show.html", {'questions': questions})
 
 
 def edit_q(request, id):
@@ -78,11 +77,11 @@ def create_q(request, id):
 
 def home(request):
     quests = Questions.objects.all()
-    return render(request, 'questions/home.html',{'quests':quests})
+    return render(request, 'questions/home.html', {'quests': quests})
 
 
 def vote(request, id):
-    question = Questions.objects.get(id = id)
+    question = Questions.objects.get(id=id)
     print(question)
     if request.method == 'POST':
         # print(request.POST['question'])
@@ -101,16 +100,14 @@ def vote(request, id):
         return redirect('/results', question.id)
 
     context = {
-        'question' : question
+        'question': question
     }
     return render(request, 'questions/vote.html', context)
 
 
 def results(request, id):
-    quest = Questions.objects.get(id = id)
+    quest = Questions.objects.get(id=id)
     context = {
-        'quest' : quest
+        'quest': quest
     }
     return render(request, 'questions/results.html', context)
-
-
