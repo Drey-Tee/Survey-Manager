@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import SurveyParticipant, SurveyQuestions, Questions
-from .forms import QuestionForm, CreateQuestionForm
+from .models import SurveyParticipant, Surveys, Questions, Responses
+from .forms import SurveyForm, CreateQuestionForm
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 
 
@@ -18,53 +18,58 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpRespons
 #     return render(request, 'survey/templates.html', data)
 
 
-def question(request):
+def survey(request):
     # surveys = SurveyQuestions.objects.all()
     if request.method == "POST":
-        form = QuestionForm(request.POST)
+        form = SurveyForm(request.POST)
         if form.is_valid():
             print(1)
             try:
                 form.save()
                 print(2)
-                return redirect('/show_q')
+                return redirect('/show')
             except:
                 pass
     else:
-        form = QuestionForm()
+        form = SurveyForm()
     return render(request, 'questions/question_index.html', {'form': form, })
 
 
-def show_q(request):
-    questions = SurveyQuestions.objects.all()
-    return render(request, "questions/question_show.html", {'questions': questions})
+def show(request):
+    surveys = Surveys.objects.all()
+    return render(request, "questions/question_show.html", {'surveys': surveys})
 
 
-def edit_q(request, id):
-    question = SurveyQuestions.objects.get(id=id)
+def edit(request, id):
+    surveys = Surveys.objects.get(id=id)
+    print(surveys)
     # surveys = Survey.objects.all()
 
-    form = QuestionForm(request.POST, instance=SurveyQuestions)
+    form = SurveyForm(request.POST, instance=Surveys)
     if request.method == 'POST':
-        question.survey_id = form.data['survey_id']
-        question.survey_name = form.data['survey_name']
-        question.save()
-        return redirect('/show_q')
-    return render(request, 'questions/question_edit.html', {'question': question})
+        # surveys.survey_id = form.data['survey_id']
+        surveys.survey_name = form.data['survey_name']
+        surveys.save()
+        print(surveys)
+        return redirect('/show')
+    return render(request, 'questions/question_edit.html', {'surveys': surveys})
 
 
-def destroy_q(request, id):
-    questions = SurveyQuestions.objects.get(id=id)
-    questions.delete()
-    return redirect("/show_q")
+def destroy(request, id):
+    surveys = Surveys.objects.get(id=id)
+    surveys.delete()
+    return redirect("/show")
 
 
-def create_q(request, id):
-    question = SurveyQuestions.objects.get(id=id)
+def create(request):
+    surveys = Surveys.objects.all()
+    question = Questions.objects.all()
     print(question)
     if request.method == "POST":
         form = CreateQuestionForm(request.POST)
+        print(form.errors)
         if form.is_valid():
+            print(form.errors)
             try:
                 form.save()
                 return redirect('/home')
@@ -72,42 +77,48 @@ def create_q(request, id):
                 pass
     else:
         form = CreateQuestionForm()
-    return render(request, 'questions/create.html', {'form': form, })
+        print(2)
+    return render(request, 'questions/create.html', {'form': form, 'surveys': surveys, 'question':question })
 
 
 def home(request):
-    quests = Questions.objects.all()
-    return render(request, 'questions/home.html', {'quests': quests})
+    # question = Questions.objects.get(id=id)
+    surveys = Surveys.objects.all()
+    questions = Questions.objects.all()
+    print(questions)
+    return render(request, 'questions/home.html', {'questions': questions, 'surveys':surveys})
 
 
-def vote(request, id):
-    question = Questions.objects.get(id=id)
-    print(question)
+# def vote(request, id):
+#     responses = Responses.objects.get(id=id)
+#     print(responses)
+#     if request.method == 'POST':
+#         print(request.POST['responses'])
+#
+#         #get the selected option
+#         responses.response = request.POST['survey']
+#         responses.id = request.POST['q_id']
+#         responses.user_name = request.POST['uname']
+#         responses.survey_id_id = request.POST['s_id']
+#         responses.save()
+#         print(responses)
+#         return redirect('/results', question.id)
+#
+#     context = {
+#         'question': question
+#     }
+#     return render(request, 'questions/vote.html', context)
+
+
+def results(request):
+    print(request.POST)
+    responses = Responses.objects.all()
+    # print(responses)
     if request.method == 'POST':
-        # print(request.POST['question'])
-        selected_option = request.POST['survey']
-        if selected_option == 'option1':
-            question.option_one_count += 1
-        elif selected_option == 'option2':
-            question.option_two_count += 1
-        elif selected_option == 'option3':
-            question.option_three_count += 1
-        else:
-            return HttpResponse(400, 'Invalid form')
+        r = Responses(question_id=request.POST['q_id'], response=request.POST['survey'], user_name=request.POST['uname'], survey_id_id=request.POST['s_id'])
 
-        question.save()
-        print(question)
-        return redirect('/results', question.id)
+        r.save()
 
-    context = {
-        'question': question
-    }
-    return render(request, 'questions/vote.html', context)
+    return render(request, 'questions/results.html',{'responses':responses})
 
 
-def results(request, id):
-    quest = Questions.objects.get(id=id)
-    context = {
-        'quest': quest
-    }
-    return render(request, 'questions/results.html', context)

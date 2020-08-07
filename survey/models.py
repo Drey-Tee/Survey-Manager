@@ -9,44 +9,37 @@ class SurveyParticipant(models.Model):
     slug = models.CharField(default='', max_length=64)
 
 
-class SurveyQuestions(models.Model):
+class Surveys(models.Model):
     survey_id = models.IntegerField()
     survey_name = models.CharField(max_length=64)
-    question = models.CharField(max_length = 400)
+    # question = models.CharField(max_length = 400)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = "survey_questions"
+        db_table = "survey"
 
 
 class Questions(models.Model):
-    TEXT = 'text'
-    RADIO = 'radio'
-    SELECT = 'select'
-    SELECT_MULTIPLE = 'select-multiple'
-    INTEGER = 'integer'
-
-    QUESTION_TYPES = (
-        (TEXT, 'text'),
-        (RADIO, 'radio'),
-        (SELECT, 'select'),
-        (SELECT_MULTIPLE, 'Select Multiple'),
-        (INTEGER, 'integer'),
-    )
-
+    survey_id = models.ForeignKey(Surveys, default=1, verbose_name="Survey", on_delete=models.SET_DEFAULT)
     question = models.TextField(max_length = 64)
-    question_type = models.CharField(max_length=200, choices=QUESTION_TYPES, default=TEXT)
-
     option_one = models.CharField(max_length=30)
     option_two = models.CharField(max_length=30)
     option_three = models.CharField(max_length=30)
-    # option_one_count = models.IntegerField(default=0)
-    # option_two_count = models.IntegerField(default=0)
-    # option_three_count = models.IntegerField(default=0)0
-    # def total(self):
-    #     return self.option_one_count + self.option_two_count + self.option_three_count
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "questions"
+
+
+class Responses(models.Model):
+    survey_id = models.ForeignKey(Surveys, default=1, verbose_name="Survey", on_delete=models.SET_DEFAULT)
+    question_id = models.IntegerField()
+    response =  models.TextField(max_length = 64)
+    user_name =  models.TextField(max_length = 64)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        db_table = "responses"
+
 

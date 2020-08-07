@@ -1,25 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Records</title>
+         {% load static %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+       {% for survey in surveys %}
+         <h2 > {{ survey.survey_name }}</h2>
+       <ul class="list-group">
+                {% for question in questions %}
+                    {% if question.survey_id_id == survey.id %}
+                         <li class="list-group-item">
+                                <strong value = "{{ question.question }}" >{{ question.question }}</strong>
+                                <br>
+                                {% if question.option_one == "" %}
+                                    <form method ="POST" class = "post-form not-mcq" action = "/results">
+                                                        {% csrf_token %}
+                                        <input type="hidden" name="q_id" value="{{question.id}}">
+                                        <input type="hidden" name="s_id" value="{{question.survey_id_id}}">
+                                        <input type="hidden" name="uname" value="Kofi">
+                                        <input name="survey" placeholder="Enter your response" required id="not-mcqr">
+                                        <button type="submit" class="btn btn-info">
+                                            Submit
+                                        </button>
+                                    </form>
+                                {% endif %}
 
-{% block main %}
-<div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Chronic Disease Surveys</h3>
-            </div>
+                                {% if question.option_one != "" %}
+                                    <form method="POST" class="post-form mcq" action="/results">
+                                    {% csrf_token %}
+                                    <input type = "hidden" name = "q_id" value = "{{question.id}}">
+                                     <input type="hidden" name="uname" value="Kofi">
+                                        <input type="hidden" name="s_id" value="{{question.survey_id_id}}">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="survey" value="option1">
+                                                {{ question.option_one }}
+                                            </label> &nbsp;
+                                            <label>
+                                                <input type="radio" name="survey" value="option2">
+                                                {{ question.option_two }}
+                                            </label> &nbsp;
+                                            <label>
+                                                <input type="radio" name="survey" value="option3">
+                                                {{ question.option_three }}
+                                            </label> &nbsp;
+                                        </div>
+                                    </div>
 
-            <ul class="list-group">
-                {% for quest in quests %}
-                <li class="list-group-item">
-                    <strong>{{ quest.question }}</strong>
-                    <span class="pull-right">
-                         <a href="/vote/{{quest.id }}"><span class="glyphicon glyphicon-pencil">Vote</span></a>
-                         <a href="/results/{{ quest.id }}">Results</a>
-                    </span>
-                </li>
+                                    <hr/>
+
+                                    <button type="submit" class="btn btn-info">
+                                        Submit
+                                    </button>
+                                </form>
+                                {% endif %}
+
+<!--                                <span class="pull-right">-->
+<!--                                     <a href="/vote/{{question.id }}"><span class="glyphicon glyphicon-pencil">Vote</span></a>-->
+<!--                                     <a href="/results/{{ question.id }}">Results</a>-->
+<!--                                </span>-->
+                         </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
+       {% endfor %}
 
-        </div>
-    </div>
-</div>
-{% endblock %}
+<center><a href="/create" class="btn btn-primary">Add New Question</a></center>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>

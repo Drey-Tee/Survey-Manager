@@ -20,19 +20,19 @@
     </tr>
     </thead>
     <tbody>
-    {% for question in questions %}
+    {% for survey in surveys %}
     <tr>
-        <td>{{ question.created_at }}</td>
-        <td>{{ question.id }}</td>
+        <td>{{ survey.created_at }}</td>
+        <td>{{ survey.survey_id }}</td>
         <td>
 <!--            <a href="/create_q/{{question.survey_name }}">{{question.survey_name}}</a>-->
-            <a href="/create_q/{{question.id}}"><span class="glyphicon glyphicon-pencil">{{question.survey_name}}</span></a>
+            <a href="/home/"><span class="glyphicon glyphicon-pencil">{{survey.survey_name}}</span></a>
 
         </td>
-        <td>{{question.updated_at }}</td>
+        <td>{{survey.updated_at }}</td>
         <td>
-            <a href="/edit_q/{{question.id }}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
-            <a href="/delete_q/{{ question.id }}">Delete</a>
+            <a href="/edit/{{survey.survey_id }}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
+            <a href="/delete/{{ survey.survey_id }}">Delete</a>
         </td>
     </tr>
     {% endfor %}
@@ -40,7 +40,7 @@
 </table>
 <br>
 <br>
-<center><a href="/question" class="btn btn-primary">Add New Record</a></center>
+<center><a href="/survey" class="btn btn-primary">Add New Record</a></center>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-<form method="POST" class="post-form" action=" ">
+<form method="POST" class="post-form" action="/create">
         {% csrf_token %}
     <div class="container">
 <br>
@@ -19,10 +19,27 @@
             {% load static %}
     </div>
   </div>
+            <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Survey Name :</label>
+    <div class="col-sm-4">
+        <select name="survey_id">
+            {% for survey in surveys %}
+                <option value="{{ survey.id }}">{{ survey.survey_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+  </div>
         <div class="form-group row">
     <label class="col-sm-2 col-form-label">Question_type:</label>
     <div class="col-sm-4">
-      {{ form.question_type}}
+          <select class="qtype">
+        <option value="0">--SELECT Question Type--</option>
+        <option value="mcq">Multiple Choice</option>
+        <option value="ntq">Number Type</option>
+        <option value="stq">Short Text</option>
+    </select>
+
+<!--      {{ form.question_type}}-->
     </div>
   </div>
   <div class="form-group row">
@@ -31,19 +48,19 @@
       {{ form.question}}
     </div>
   </div>
-    <div class="form-group row">
+    <div class="form-group row option">
     <label class="col-sm-2 col-form-label">Option 1:</label>
    <div class="col-sm-4">
      {{ form.option_one }}
     </div>
   </div>
-    <div class="form-group row">
+    <div class="form-group row option">
     <label class="col-sm-2 col-form-label">Option 2:</label>
     <div class="col-sm-4">
         {{ form.option_two }}
     </div>
     </div>
-        <div class="form-group row">
+        <div class="form-group row option">
             <label class="col-sm-2 col-form-label">Option 3:</label>
            <div class="col-sm-4">
                {{ form.option_three }}
@@ -59,5 +76,25 @@
 </form>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $("select.qtype").change(function(){
+        var selectedQtype = $(this).children("option:selected").val();
+
+        //alert("You have selected the qtype - " + selectedQtype);
+        if(selectedQtype == "mcq"){
+            $(".option").show();
+        }else{
+          $("#id_option_one").removeAttr('required');
+          $("#id_option_two").removeAttr('required');
+          $("#id_option_three").removeAttr('required');
+          $(".option").hide();
+
+
+   }
+
+    });
+});
+</script>
 </body>
 </html>

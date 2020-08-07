@@ -15,6 +15,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h2>{{ question.question }}</h2>
+                          <meta id="qtype" name="qtype" content="{{ question.option_one }}">
                     </div>
                 </div>
 
@@ -22,12 +23,13 @@
                     <div class="col-lg-12">
                         <hr/>
 
-                        <form method="POST" class="post-form" action="/results/{{question.id}}">
+                        <form method="POST" class="post-form mcq" action="/results/{{question.id}}">
                             {% csrf_token %}
+                            <input type = "hidden" name = "q_id" value = "{{question.id}}">
                             <div class="form-group">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="survey" value="option1" required>
+                                        <input type="radio" name="survey" value="option1">
                                         {{ question.option_one }}
                                     </label> &nbsp;
                                     <label>
@@ -47,6 +49,15 @@
                                 Submit
                             </button>
                         </form>
+                        <form method ="POST" class = "post-form not-mcq" action = "/results/{{question.id}}">
+                                                        {% csrf_token %}
+                            <input type = "hidden" name = "q_id" value = "{{question.id}}">
+                            <input type = "hidden" name = "s_id" value = "{{question.suvrvey_id}}">
+                            <input name = "survey" placeholder="Enter your response" required id = "not-mcqr" >
+                            <button type="submit" class="btn btn-info">
+                                Submit
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -54,7 +65,28 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
                     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
                     crossorigin="anonymous"></script>
+<script>
+            $(document).ready(function(){
+           var optionValue = $("#qtype").attr("content");
 
+
+        //alert("You have selected the qtype - " + selectedQtype);
+        if(optionValue == ""){
+            $(".not-mcq").show();
+            $(".mcq").hide();
+            $("#not-mcqr").attr("required", "true");
+
+        }else{
+          $(".not-mcq").hide();
+          $(".mcq").show();
+          $("#not-mcqr").removeAttr('required');
+
+
+
+   }
+
+});
+</script>
         </div>
     </div>
 </div>

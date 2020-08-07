@@ -1,15 +1,19 @@
 from django import forms
-from .models import  SurveyQuestions, Questions
+from .models import  Surveys, Questions
 
 
-class QuestionForm(forms.ModelForm):
+class SurveyForm(forms.ModelForm):
     class Meta:
-        model = SurveyQuestions
+        model = Surveys
         fields = ('survey_name','survey_id')
         # fields = "__all__"
 
 
 class CreateQuestionForm(forms.ModelForm):
+    option_one = forms.CharField(required=True)
+    option_two = forms.CharField(required=True)
+    option_three = forms.CharField(required=True)
+
     class Meta:
         model = Questions
-        fields = ('question', 'question_type','option_one', 'option_two', 'option_three')
+        fields = ('survey_id','question', 'option_one', 'option_two', 'option_three')
